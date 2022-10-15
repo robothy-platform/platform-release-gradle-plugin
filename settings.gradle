@@ -1,0 +1,25 @@
+pluginManagement {
+
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id.startsWith('robothy-platform')) {
+                useModule("com.robothy:platform-gradle-plugins:${robothyPlatformGradlePluginsVersion}")
+            }
+        }
+    }
+
+    repositories {
+        mavenLocal()
+        maven {
+            url = 'https://maven.pkg.github.com/robothy-platform/maven'
+            credentials {
+                username = "${GITHUB_USERNAME}"
+                password = "${GITHUB_TOKEN}"
+            }
+        }
+        gradlePluginPortal()
+    }
+}
+
+
+rootProject.name = 'platform-release-gradle-plugin'

@@ -1,0 +1,42 @@
+plugins {
+    id 'robothy-platform'
+}
+
+dependencies {
+    implementation "com.robothy:platform-utils:2022.2"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.1'
+    testImplementation 'org.mockito:mockito-inline:3.4.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+repositories {
+    maven {
+        url = 'https://maven.pkg.github.com/robothy-platform/maven'
+        credentials {
+            username = "${GITHUB_USERNAME}"
+            password = "${GITHUB_TOKEN}"
+        }
+    }
+}
+
+gradlePlugin {
+
+//    testSourceSets(sourceSets.functionalTest)
+
+    plugins {
+
+        robothyPlatform {
+            id = 'robothy-platform-release'
+            implementationClass = 'com.robothy.platform.gralde.plugin.PlatformPlugin'
+            displayName = 'Robothy Platform Plugin'
+        }
+
+    }
+}
+
+afterEvaluate {
+    configurations.each {
+        println it.getName()
+    }
+}
