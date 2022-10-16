@@ -4,6 +4,7 @@ import com.robothy.platform.release.gradle.task.Constants;
 import com.robothy.platform.release.gradle.task.DefaultNextVersionResolver;
 import com.robothy.platform.release.gradle.task.GetGitWorkingBranch;
 import com.robothy.platform.release.gradle.task.NextVersion;
+import com.robothy.platform.release.gradle.task.ReleaseTask;
 import com.robothy.platform.release.gradle.task.ReleaseTaskAction;
 import com.robothy.platform.release.gradle.task.ResolveProjectVersionTask;
 import com.robothy.platform.release.gradle.task.TaskNames;
@@ -34,7 +35,7 @@ public class PlatformReleasePlugin implements Plugin<Project> {
       getGitWorkingBranch.setGroup(Constants.RELEASE_GROUP_NAME);
       getGitWorkingBranch.setDescription(TaskNames.GET_GIT_WORKING_BRANCH.getDescription());
 
-      Exec release = tasks.register(TaskNames.RELEASE.getName(), Exec.class, new ReleaseTaskAction()).get();
+      Exec release = tasks.register(TaskNames.RELEASE.getName(), ReleaseTask.class, new ReleaseTaskAction()).get();
       release.setGroup(Constants.RELEASE_GROUP_NAME);
       release.setDescription(TaskNames.RELEASE.getDescription());
     }

@@ -21,11 +21,6 @@ public class ReleaseTaskAction implements Action<Exec> {
   public void execute(Exec exec) {
     exec.setWorkingDir(exec.getProject().getProjectDir());
 
-    exec.dependsOn(TaskNames.NEXT_VERSION.getName(), TaskNames.GET_GIT_WORKING_BRANCH.getName());
-    Project project = exec.getProject();
-    assert project == project.getRootProject();
-    dependsOnPublish(exec, project);
-
     exec.doFirst(task -> {
       String version = exec.getProject().getVersion().toString();
       List<String> cmd = new ArrayList<>();
@@ -38,14 +33,6 @@ public class ReleaseTaskAction implements Action<Exec> {
       commitNextVersion(cmd, version, gitWorkingBranchTask.getWorkingBranch());
       exec.commandLine("sh", "-c", String.join(" && ", cmd));
     });
-  }
-
-  private void dependsOnPublish(Task task, Project project) {
-    Task publish = project.getTasks().findByName("publish");
-    if (Objects.nonNull(publish)) {
-      task.dependsOn(publish);
-    }
-    project.subprojects(subproject -> dependsOnPublish(task, subproject));
   }
 
   private void tag(List<String> cmd, String version) {
