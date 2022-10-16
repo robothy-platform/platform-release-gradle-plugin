@@ -21,16 +21,22 @@ public class PlatformReleasePlugin implements Plugin<Project> {
   @Override
   public void apply(Project project) {
     TaskContainer tasks = project.getTasks();
-    tasks.register(TaskNames.RESOLVE_PROJECT_VERSION.getName(), ResolveProjectVersionTask.class)
-        .get().setGroup(Constants.RELEASE_GROUP_NAME);
+    ResolveProjectVersionTask resolveProjectVersionTask = tasks.register(TaskNames.RESOLVE_PROJECT_VERSION.getName(), ResolveProjectVersionTask.class).get();
+    resolveProjectVersionTask.setGroup(Constants.RELEASE_GROUP_NAME);
+    resolveProjectVersionTask.setDescription(TaskNames.RESOLVE_PROJECT_VERSION.getDescription());
 
     if (project.getRootProject() == project) {
-      tasks.register(TaskNames.NEXT_VERSION.getName(), NextVersion.class, new DefaultNextVersionResolver())
-          .get().setGroup(Constants.RELEASE_GROUP_NAME);
-      tasks.register(TaskNames.GET_GIT_WORKING_BRANCH.getName(), GetGitWorkingBranch.class)
-          .get().setGroup(Constants.RELEASE_GROUP_NAME);
-      tasks.register(TaskNames.RELEASE.getName(), Exec.class, new ReleaseTaskAction())
-          .get().setGroup(Constants.RELEASE_GROUP_NAME);
+      NextVersion nextVersion = tasks.register(TaskNames.NEXT_VERSION.getName(), NextVersion.class, new DefaultNextVersionResolver()).get();
+      nextVersion.setGroup(Constants.RELEASE_GROUP_NAME);
+      nextVersion.setDescription(TaskNames.NEXT_VERSION.getDescription());
+
+      GetGitWorkingBranch getGitWorkingBranch = tasks.register(TaskNames.GET_GIT_WORKING_BRANCH.getName(), GetGitWorkingBranch.class).get();
+      getGitWorkingBranch.setGroup(Constants.RELEASE_GROUP_NAME);
+      getGitWorkingBranch.setDescription(TaskNames.GET_GIT_WORKING_BRANCH.getDescription());
+
+      Exec release = tasks.register(TaskNames.RELEASE.getName(), Exec.class, new ReleaseTaskAction()).get();
+      release.setGroup(Constants.RELEASE_GROUP_NAME);
+      release.setDescription(TaskNames.RELEASE.getDescription());
     }
   }
 
