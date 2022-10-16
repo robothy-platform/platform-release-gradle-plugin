@@ -34,9 +34,3 @@ gradlePlugin {
 
     }
 }
-
-afterEvaluate {
-    configurations.each {
-        println it.getName()
-    }
-}
