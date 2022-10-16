@@ -28,8 +28,8 @@ gradlePlugin {
 
         robothyPlatform {
             id = 'robothy-platform-release'
-            implementationClass = 'com.robothy.platform.gralde.plugin.PlatformPlugin'
-            displayName = 'Robothy Platform Plugin'
+            implementationClass = 'com.robothy.platform.release.gradle.plugin.PlatformReleasePlugin'
+            displayName = 'Robothy Platform Release Plugin'
         }
 
     }
