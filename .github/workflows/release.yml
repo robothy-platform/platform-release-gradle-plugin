@@ -23,33 +23,42 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Setup Java 17 for Gradle
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
       - name: Gradle Cache
         uses: actions/cache@v3
         with:
-          path: |
-            ~/.gradle/caches
+          path: ~/.gradle
           key: ${{runner.os}}-build-gradle-${{hashFiles('**/gradle-wrapper.properties')}}
 
       - name: Prepare parameters
         run: |
           git log --pretty=format:"%H - %an, %aI : %s" -5
-          mkdir ~/.gradle
+          mkdir -p ~/.gradle
           echo "GITHUB_TOKEN=${{secrets.PACKAGES_TOKEN}}" > ~/.gradle/gradle.properties
           echo "GITHUB_USERNAME=Robothy" >> ~/.gradle/gradle.properties
           chmod +x gradlew
 
       - name: Release
         if: ${{inputs.gradleLogLevel == 'None'}}
-        run: ./gradlew release -PRELEASE=true
+        run: ./gradlew check release -Prelease=true
 
       - name: Release(Info)
         if: ${{inputs.gradleLogLevel == 'Info'}}
-        run: ./gradlew release -PRELEASE=true --info
+        run: ./gradlew check release -Prelease=true --info
 
       - name: Release(Debug)
         if: ${{inputs.gradleLogLevel == 'Debug'}}
-        run: ./gradlew release -PRELEASE=true --debug
+        run: ./gradlew check release -Prelease=true --debug
 
       - name: Release(Stacktrace)
         if: ${{inputs.gradleLogLevel == 'Stacktrace'}}
-        run: ./gradlew release -PRELEASE=true --stacktrace
+        run: ./gradlew check release -Prelease=true --stacktrace
+
+      - name: Clear sensitive files
+        run: |
+          rm ~/.gradle/gradle.properties

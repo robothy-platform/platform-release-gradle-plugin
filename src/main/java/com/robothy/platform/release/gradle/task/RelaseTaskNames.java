@@ -3,7 +3,7 @@ package com.robothy.platform.release.gradle.task;
 /**
  * Task descriptions.
  */
-public enum TaskNames {
+public enum RelaseTaskNames {
 
   /**
    * release task.
@@ -34,7 +34,7 @@ public enum TaskNames {
 
 
 
-  TaskNames(String name, String description) {
+  RelaseTaskNames(String name, String description) {
     this.name = name;
     this.description = description;
   }

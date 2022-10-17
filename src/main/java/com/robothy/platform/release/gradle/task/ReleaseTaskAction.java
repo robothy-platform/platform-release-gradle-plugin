@@ -2,10 +2,7 @@ package com.robothy.platform.release.gradle.task;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import org.gradle.api.Action;
-import org.gradle.api.Project;
-import org.gradle.api.Task;
 import org.gradle.api.logging.Logging;
 import org.gradle.api.tasks.Exec;
 import org.slf4j.Logger;
@@ -29,7 +26,7 @@ public class ReleaseTaskAction implements Action<Exec> {
       tag(cmd, version);
 
       GetGitWorkingBranch gitWorkingBranchTask =
-          (GetGitWorkingBranch) task.getProject().getTasks().findByName(TaskNames.GET_GIT_WORKING_BRANCH.getName());
+          (GetGitWorkingBranch) task.getProject().getTasks().findByName(RelaseTaskNames.GET_GIT_WORKING_BRANCH.getName());
       commitNextVersion(cmd, version, gitWorkingBranchTask.getWorkingBranch());
       exec.commandLine("sh", "-c", String.join(" && ", cmd));
     });

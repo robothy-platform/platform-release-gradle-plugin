@@ -32,7 +32,7 @@ public class GetGitWorkingBranch extends AbstractExecTask<GetGitWorkingBranch> {
   public GetGitWorkingBranch() {
     super(GetGitWorkingBranch.class);
     setGroup(Constants.RELEASE_GROUP_NAME);
-    setDescription(TaskNames.GET_GIT_WORKING_BRANCH.getDescription());
+    setDescription(RelaseTaskNames.GET_GIT_WORKING_BRANCH.getDescription());
     ByteArrayOutputStream stdout = new ByteArrayOutputStream();
     ByteArrayOutputStream stderr = new ByteArrayOutputStream();
 
