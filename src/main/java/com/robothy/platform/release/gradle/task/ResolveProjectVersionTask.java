@@ -20,6 +20,8 @@ public class ResolveProjectVersionTask extends DefaultTask {
   public ResolveProjectVersionTask() {
     Project project = getProject();
     project.afterEvaluate(this::configureDependentTask);
+    project.getSubprojects().forEach(subProject -> subProject.getTasks()
+        .register("resolveProjectVersion", ResolveProjectVersionTask.class));
   }
 
   @TaskAction
