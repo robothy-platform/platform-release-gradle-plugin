@@ -19,7 +19,7 @@ public class ReleaseTask extends Exec {
   }
 
   protected void configureTaskDependencies(Project project) {
-    Set<String> dependencies = Set.of(RelaseTaskNames.NEXT_VERSION.getName(), RelaseTaskNames.GET_GIT_WORKING_BRANCH.getName(),
+    Set<String> dependencies = Set.of(ReleaseTaskNames.NEXT_SNAPSHOT_VERSION.getName(), ReleaseTaskNames.GET_GIT_WORKING_BRANCH.getName(),
         "publish", "publishPlugins");
     project.getTasks().stream().filter(it -> dependencies.contains(it.getName()))
         .forEach(this::dependsOn);

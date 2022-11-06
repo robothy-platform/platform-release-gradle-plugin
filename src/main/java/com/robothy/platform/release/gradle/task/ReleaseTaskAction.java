@@ -26,7 +26,7 @@ public class ReleaseTaskAction implements Action<Exec> {
       tag(cmd, version);
 
       GetGitWorkingBranch gitWorkingBranchTask =
-          (GetGitWorkingBranch) task.getProject().getTasks().findByName(RelaseTaskNames.GET_GIT_WORKING_BRANCH.getName());
+          (GetGitWorkingBranch) task.getProject().getTasks().findByName(ReleaseTaskNames.GET_GIT_WORKING_BRANCH.getName());
       commitNextVersion(cmd, version, gitWorkingBranchTask.getWorkingBranch());
       exec.commandLine("sh", "-c", String.join(" && ", cmd));
     });
